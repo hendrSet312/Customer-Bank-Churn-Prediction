@@ -42,8 +42,8 @@ class form_handler:
 def main():
 
     st.image('image_banner.jpg')
-    st.title("🏃🚪Customer Churn Prediction")
-    st.caption('Predict whether a customer will change a bank')
+    st.header("🏃🚪Customer Churn Prediction")
+    st.write('Predict whether a customer will change a bank')
 
     #form untuk mengisi data
     with st.form("User Prediction"):
