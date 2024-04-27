@@ -4,18 +4,21 @@ import pandas as pd
 import numpy as np
 import joblib
 
+#import model
 model = joblib.load('xgboost.pkl')
 one_hot_encoder = joblib.load('one_hot_encoder.pkl')
 
-
+#class untuk data form
 class form_handler:
     def __init__(self,data_dict):
         self.data_dict = data_dict
         self.dataframe = None
 
+    #konversi ke dataframe pandas
     def convert_to_pandas(self):
         self.dataframe = pd.DataFrame(self.data_dict)
     
+    #membersihkan data sebelum diprediksi
     def cleaning_data(self):
         self.dataframe = self.dataframe.replace({
             'Gender':{'🚹 Male':1,'🚺 Female':0},
@@ -25,6 +28,7 @@ class form_handler:
         result = one_hot_encoder.transform(self.dataframe[['Geography']])
         self.dataframe = pd.concat([self.dataframe,result],axis = 1).drop(columns=['Geography'])
     
+    #prediksi data 
     def predict(self):
         x = self.dataframe.values
         prediction_res = model.predict_proba(x).ravel()
@@ -34,13 +38,14 @@ class form_handler:
             return ['churned',round(yes_proba*100,2)]
         return ['not churned',round(no_proba*100,2)]
 
-        
+#isi main page   
 def main():
 
     st.image('image_banner.jpg')
     st.title("🔎 Customer Churn Prediction")
     st.subheader('Predict whether a customer will change a bank')
 
+    #form untuk mengisi data
     with st.form("User Prediction"):
         st.write('👤 Customer Information')
 
@@ -56,6 +61,8 @@ def main():
         submitted = st.form_submit_button("✨ Predict")
 
         if submitted:
+
+            #mengumpulkan data untuk diolah menjadi prediksi 
             data = {
                 'CreditScore' : [int(credit_score)],
                 'Gender' :[gender] , 
@@ -71,6 +78,7 @@ def main():
             submitted_data.cleaning_data()
             result,percentage = submitted_data.predict()
 
+            #hasil prediksi
             st.write('**Result :**')
             color = 'red' if result == 'churned' else 'green'
             emoji =  '😟' if result == 'churned' else '😀'
