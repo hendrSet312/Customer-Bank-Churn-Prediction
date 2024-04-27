@@ -42,12 +42,12 @@ class form_handler:
 def main():
 
     st.image('image_banner.jpg')
-    st.title("🔎 Customer Churn Prediction")
-    st.subheader('Predict whether a customer will change a bank')
+    st.title("🏃🚪Customer Churn Prediction")
+    st.caption('Predict whether a customer will change a bank')
 
     #form untuk mengisi data
     with st.form("User Prediction"):
-        st.write('👤 Customer Information')
+        st.write('**👤 Customer Information**')
 
         surname = st.text_input("Name",placeholder="Insert the customer name...")
         gender = st.radio('Gender',['🚹 Male','🚺 Female'])
