@@ -40,9 +40,7 @@ class form_handler:
 
 #isi main page   
 def main():
-
-    st.image('image_banner.jpg')
-    st.header("🏃🚪Customer Churn Prediction")
+    st.header("🏦 Bank Customer Churn Prediction")
     st.write('Predict whether a customer will change a bank')
 
     #form untuk mengisi data
